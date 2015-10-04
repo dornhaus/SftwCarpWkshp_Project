@@ -63,4 +63,16 @@ MaxLifespan
 
 ```
 
+Now we'll work on histograms.
+This shows that a life expectancy of around 70 is most frequent across countries, but a fair number have life expectancies below 50 in some years.
+```{r histograms, echo=FALSE}
+hist(gapdata$lifeExp, main = "Distribution across countries of life expectancy")
+hist(gapdata$lifeExp, breaks = 40, main = "Distribution across countries of life expectancy")
+
+data2007 <- subset(gapdata, year==2007)
+hist(data2007$lifeExp, main = "Distribution across countries of life expectancy for 2007 (no duplicate entries for countries)")
+
+```
+
+Here's the end of our analysis output.
 
