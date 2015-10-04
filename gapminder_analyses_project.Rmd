@@ -5,20 +5,24 @@ date: "10/4/2015"
 output: html_document
 ---
 
-```{r}
-install.packages("dplyr")
+```{r setup, echo=FALSE, message=FALSE}
 library("dplyr")
 
 ```
 
+We can see that the GDP per Person has been clearly increasing in the countries Germany, Mexico, and Mongolia.
 
-```{r, read-in-data, echo=FALSE}
+```{r read-in-data, echo=FALSE}
 gapdata <- read.table("output/combined_gapMinder.tsv", sep = "\t", header = TRUE)
-                      
+```
+
+```{r calculations, echo=FALSE}
 GermanyData <- subset(gapdata, country=="Germany")
 MexicoData <- subset(gapdata, country=="Mexico")
 MongoliaData <- subset(gapdata, country=="Mongolia")
+```
 
+```{r plotting, echo=FALSE}
 plot(gdpPercap ~ year, 
      data=GermanyData,
      xlab = list("Year"),
@@ -38,7 +42,25 @@ plot(gdpPercap ~ year,
      main = "GDP Change for Mongolia"
      )
 
+```
 
+Life expectancy by continent:
+```{r statistics, echo=FALSE}
+AvgLifespan <- aggregate(gapdata$lifeExp, list(gapdata$continent), mean)
+MinLifespan <- aggregate(gapdata$lifeExp, list(gapdata$continent), min)
+MaxLifespan <- aggregate(gapdata$lifeExp, list(gapdata$continent), max)
+
+colnames(AvgLifespan) <- c("Continent", "Average Lifespan")
+colnames(MinLifespan) <- c("Continent", "Minimum Lifespan")
+colnames(MaxLifespan) <- c("Continent", "Maximum Lifespan")
+```
+
+We clearly see that maximum life expectancy is greater than the mean.
+```{r lifeExpoutput, echo=FALSE}
+AvgLifespan
+MinLifespan
+MaxLifespan
 
 ```
+
 
