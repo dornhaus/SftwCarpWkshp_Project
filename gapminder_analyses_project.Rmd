@@ -1,48 +1,44 @@
 ---
-title: "Gapminder_analyses_demo"
+title: "Analyzing GDP for final project in Software Carpentry Workshop Oct 2015"
 author: "Anna Dornhaus"
 date: "10/4/2015"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
 ```{r}
 install.packages("dplyr")
 library("dplyr")
 
-
 ```
 
-Or in line `r 2+2` with single "`"s.
 
-```{r, read-in-data}
+```{r, read-in-data, echo=FALSE}
 gapdata <- read.table("output/combined_gapMinder.tsv", sep = "\t", header = TRUE)
                       
-str(gapdata)
+GermanyData <- subset(gapdata, country=="Germany")
+MexicoData <- subset(gapdata, country=="Mexico")
+MongoliaData <- subset(gapdata, country=="Mongolia")
 
-## Calculate mean population of continents
-gapdata %>% 
-  select(pop, country, continent) %>%
-  group_by(continent) %>%
-  summarise(mean = mean(pop))
-
-gapdata %>% 
-  select(pop, country, year, continent) %>%
-  filter(year==2002) %>%
-  group_by(continent) %>%
-  summarise(mean = mean(pop))
+plot(gdpPercap ~ year, 
+     data=GermanyData,
+     xlab = list("Year"),
+     ylab = list("GDP per Person"),
+     main = "GDP Change for Germany"
+     )
+plot(gdpPercap ~ year, 
+     data=MexicoData,
+     xlab = list("Year"),
+     ylab = list("GDP per Person"),
+     main = "GDP Change for Mexico"
+     )
+plot(gdpPercap ~ year, 
+     data=MongoliaData,
+     xlab = list("Year"),
+     ylab = list("GDP per Person"),
+     main = "GDP Change for Mongolia"
+     )
 
 
 
 ```
 
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
